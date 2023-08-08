@@ -1,4 +1,4 @@
-import ClientOnly from "@/app/components/clientOnly";
+import ClientOnly from "@/app/components/ClientOnly";
 import EmailClient from "./EmailClient";
 
 const EmailPage = () => {

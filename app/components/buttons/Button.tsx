@@ -2,11 +2,11 @@ import React, { useCallback } from "react";
 
 interface buttonProps {
   onClick: () => void;
-  disabled: boolean;
+  disabled?: boolean;
   label: string;
 }
 
-const Button: React.FC<buttonProps> = ({ onClick, disabled, label }) => {
+const Button: React.FC<buttonProps> = ({ onClick, disabled=false, label }) => {
   const handleSubmit = useCallback(() => {
     if (disabled) {
       return;

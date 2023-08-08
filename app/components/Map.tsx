@@ -3,7 +3,7 @@
 import GoogleMapReact from "google-map-react";
 
 interface MapProps {
-  latlng: number[];
+  latlng?: number[];
 }
 
 const Map: React.FC<MapProps> = ({ latlng = [10, 10] }) => {

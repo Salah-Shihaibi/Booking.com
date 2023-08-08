@@ -1,5 +1,5 @@
 import getListings from "./actions/getListing";
-import ListingCard from "./components/ListingCard";
+import ListingCard from "./components/listing/ListingCard";
 import getCurrentUser from "./actions/getCurrentUser";
 
 export default async function Home() {
@@ -9,12 +9,11 @@ export default async function Home() {
     <main>
       <div
         className="
-        pt-2
         grid
         grid-cols-1
         sm:grid-cols-2
-        md:gird-cols-3
-        lg:gird-cols-4
+        md:grid-cols-3
+        lg:grid-cols-4
         xl:grid-cols-5
         2xl:grid-cols-6
         gap-8

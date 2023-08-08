@@ -8,7 +8,7 @@ import SignIn from "../../components/signup/SignIn";
 import Button from "../../components/buttons/Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
-import ClientOnly from "@/app/components/clientOnly";
+import ClientOnly from "@/app/components/ClientOnly";
 
 const LoginClient = () => {
   const router = useRouter();
