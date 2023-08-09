@@ -3,23 +3,27 @@
 import Heading from "@/app/components/Heading";
 import useCountries from "@/app/hooks/useCountries";
 import Map from "@/app/components/Map";
-import { Listing, User } from "@prisma/client";
+import { Listing, Reservation, User } from "@prisma/client";
 import Image from "next/image";
 import Avatar from "@/app/components/Avatar";
 import { propertyTypes } from "@/app/components/navbar/PropertyFilter";
+import ListingReservation from "@/app/components/listing/ListingReservation";
 
 interface ListingPageClientProps {
   listing: Listing & { user: User };
   currentUser: User | null;
+  reservations?: Reservation[] | null;
 }
 
 const ListingPageClient: React.FC<ListingPageClientProps> = ({
   listing,
   currentUser,
+  reservations,
 }) => {
   const country = useCountries().getByValue(listing.locationValue);
   const propertyType = propertyTypes.find((p) => listing.category === p.label);
   const Icon = propertyType?.icon;
+
   return (
     <div
       className="
@@ -49,10 +53,11 @@ const ListingPageClient: React.FC<ListingPageClientProps> = ({
           />
         </div>
 
-        <div className="col-span-4 flex flex-col gap-8">
-          <div className="flex flex-col gap-2">
-            <div
-              className="
+        <div className="grid grid-cols-8 gap-4">
+          <div className="col-span-full order-last lg:col-span-5 lg:order-first flex flex-col gap-8">
+            <div className="flex flex-col gap-2">
+              <div
+                className="
             text-xl 
             font-semibold 
             flex 
@@ -60,12 +65,12 @@ const ListingPageClient: React.FC<ListingPageClientProps> = ({
             items-center
             gap-2
           "
-            >
-              <div>Hosted by {listing?.user?.email}</div>
-              <Avatar src={listing?.user?.image} />
-            </div>
-            <div
-              className="
+              >
+                <div>Hosted by {listing?.user?.email}</div>
+                <Avatar src={listing?.user?.image} />
+              </div>
+              <div
+                className="
             flex 
             flex-row 
             items-center 
@@ -73,31 +78,42 @@ const ListingPageClient: React.FC<ListingPageClientProps> = ({
             font-light
             text-neutral-500
           "
-            >
-              <div>{listing.guestCount} guests</div>
-              <div>{listing.roomCount} rooms</div>
-              <div>{listing.bathroomCount} bathrooms</div>
-            </div>
-          </div>
-          <hr />
-          <div className="flex flex-row gap-8 items-center">
-            <Icon size={60} className="text-neutral-600" />
-            <div className="flex flex-col">
-              <div className="text-lg font-semibold">{propertyType?.label}</div>
-              <div className="text-neutral-500 font-light">
-                {propertyType?.description}
+              >
+                <div>{listing.guestCount} guests</div>
+                <div>{listing.roomCount} rooms</div>
+                <div>{listing.bathroomCount} bathrooms</div>
               </div>
             </div>
-          </div>
-          <hr />
-          <div
-            className="
+            <hr />
+            <div className="flex flex-row gap-8 items-center">
+              <Icon size={60} className="text-neutral-600" />
+              <div className="flex flex-col">
+                <div className="text-lg font-semibold">
+                  {propertyType?.label}
+                </div>
+                <div className="text-neutral-500 font-light">
+                  {propertyType?.description}
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div
+              className="
       text-lg font-light text-neutral-500"
-          >
-            {listing.description}
+            >
+              {listing.description}
+            </div>
+            <hr />
+            <Map latlng={country?.latlng} />
           </div>
-          <hr />
-          <Map latlng={country?.latlng} />
+
+          <div className="lg:col-span-3 col-span-full order-first lg:order-last">
+            <ListingReservation
+              reservations={reservations}
+              listing={listing}
+              currentUser={currentUser}
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -44,7 +44,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ currentUser, data }) => {
         <div className="text-sm font-light text-neutral-500">
           {country?.label} - {country?.region}
         </div>
-        <div className="">
+        <div>
           ${data.price}{" "}
           <span className="font-light text-neutral-500">- night</span>
         </div>
