@@ -33,7 +33,6 @@ const Button: React.FC<buttonProps> = ({
                 cursor-pointer 
                 px-3 py-2 
                 rounded
-                mt-4
                 hover:bg-blue-800
                 ${width}
                   `}

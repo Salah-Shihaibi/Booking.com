@@ -1,53 +1,176 @@
 "use client";
 import useCountries from "@/app/hooks/useCountries";
-import { Listing, User } from "@prisma/client";
+import { Listing, Reservation, User } from "@prisma/client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Button from "../buttons/Button";
+import { AiOutlineRight } from "react-icons/ai";
+import { MdCancel } from "react-icons/md";
 
 interface ListingCardProps {
-  currentUser: User | null;
-  data: Listing;
+  currentUser: User | null | undefined;
+  listing: Listing;
+  reservation: Reservation;
+  onCancel?: (id: number) => void;
+  disabled: boolean;
+  actionId: number;
+  cancelLabel: string;
 }
 
-const ListingCard: React.FC<ListingCardProps> = ({ currentUser, data }) => {
+const ListingCard: React.FC<ListingCardProps> = ({
+  currentUser,
+  listing,
+  reservation,
+  onCancel,
+  disabled,
+  actionId,
+  cancelLabel,
+}) => {
   const router = useRouter();
-  const country = useCountries().getByValue(data.locationValue);
+  const country = useCountries().getByValue(listing.locationValue);
   return (
     <div
-      onClick={() => {
-        router.push(`/listings/${data.id}`);
-      }}
-      className="flex flex-col gap-2 w-full group"
+      className={`flex flex-row
+       w-full group
+       border
+       p-2
+       pr-1
+       sm:p-4
+       rounded-xl
+       border-neutral-200
+       justify-between
+       relative
+       `}
     >
-      <div
-        className="
+      {onCancel && (
+        <MdCancel
+          onClick={() => {
+            onCancel(actionId);
+          }}
+          size={27}
+          className={`absolute
+       top-0.5 right-0.5
+       sm:right-3
+       sm:top-2
+     text-blue-600
+      hover:text-blue-900
+      md:hidden lg:block xl:hidden
+      ${disabled ? "cursor-not-allowed" : "cursor-pointer"}
+      `}
+        />
+      )}
+      <div className="flex flex-row gap-4">
+        <div
+          className="
     aspect-square
-    w-full
     relative
     overflow-hidden
     rounded-xl
+    sm:h-[200px]
+    sm:w-[200px]
+    w-[110px]
+    h-[110px]
    "
-      >
-        <Image
-          fill
-          alt="Listing"
-          src={data.imagesSrc[0]}
-          className="object-cover
+        >
+          <Image
+            onClick={() => {
+              disabled ? null : router.push(`/listings/${listing.id}`);
+            }}
+            fill
+            alt="Listing"
+            src={listing.imagesSrc[0]}
+            className={`object-cover
                 h-full
                 w-full
                 group-hover:scale-110
-                transition"
-        />
+                transition
+                ${disabled ? "cursor-not-allowed" : "cursor-pointer"}
+                `}
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <div
+            onClick={() => {
+              disabled ? null : router.push(`/listings/${listing.id}`);
+            }}
+            className={`text-xl
+         font-extrabold
+         text-blue-600 
+          hover:text-blue-800
+          ${disabled ? "cursor-not-allowed" : "cursor-pointer"}
+          `}
+          >
+            {listing.title}
+          </div>
+          <div className="text-sm text-neutral-600">
+            {country?.label} - {country?.region}
+          </div>
+          <div>
+            ${listing.price}{" "}
+            <span className="font-light text-neutral-500">- night</span>
+          </div>
+
+          <div
+            className="
+             flex md:hidden lg:flex xl:hidden
+             flex-row gap-2
+             items-center
+             text-xs font-light
+            text-neutral-600"
+          >
+            <span
+              className="p-1
+            bg-blue-900
+            text-white
+             font-semibold
+              rounded-md"
+            >
+              9.5
+            </span>
+            {"Review score"} . {"10"} reviews
+          </div>
+
+          <div className="hidden sm:block text-md text-neutral-600">
+            {listing.description}
+          </div>
+        </div>
       </div>
-      <div>
-        <div className="text-lg font-bold">{data.title}</div>
-        <div className="text-sm font-light text-neutral-500">
-          {country?.label} - {country?.region}
+      <div className="hidden md:flex lg:hidden xl:flex flex-col justify-between">
+        <div className="flex flex-row gap-5 justify-end">
+          <div>
+            <div>{"Review score \n"}</div>
+            <div className="text-sm font-light text-neutral-500">
+              {"10"} reviews
+            </div>
+          </div>
+          <div
+            className="p-2 flex
+             items-center
+              bg-blue-900
+               text-white
+                rounded-md"
+          >
+            9.5
+          </div>
         </div>
-        <div>
-          ${data.price}{" "}
-          <span className="font-light text-neutral-500">- night</span>
-        </div>
+        {onCancel && (
+          <div className="">
+            <Button onClick={() => onCancel(actionId)} label={cancelLabel} />
+          </div>
+        )}
+      </div>
+      <div
+        onClick={() => {
+          disabled ? null : router.push(`/listings/${listing.id}`);
+        }}
+        className={`
+      flex md:hidden lg:flex xl:hidden
+      items-center
+      hover:text-neutral-200
+      ${disabled ? "cursor-not-allowed" : "cursor-pointer"}
+      `}
+      >
+        <AiOutlineRight size={20} />
       </div>
     </div>
   );

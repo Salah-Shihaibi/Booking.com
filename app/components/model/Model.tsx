@@ -64,6 +64,12 @@ const Model: React.FC<ModelProps> = ({ toggleMenu, isMenu, currentUser }) => {
           <ModelButton onClick={() => {}} label="Dashboard" />
           <ModelButton
             onClick={() => {
+              router.push("/trips");
+            }}
+            label="My trips"
+          />
+          <ModelButton
+            onClick={() => {
               router.push("/listings/create");
             }}
             label="List your property"

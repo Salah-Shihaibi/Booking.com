@@ -27,7 +27,7 @@ export default async function getReservations(params: IParams) {
     const reservations = await prisma.reservation.findMany({
       where: query,
       include: {
-        user: true,
+        listing: true,
       },
       orderBy: {
         createdAt: "desc",
