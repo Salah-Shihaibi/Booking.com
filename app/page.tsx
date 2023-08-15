@@ -1,10 +1,11 @@
-import getListings from "./actions/getListing";
+import getListings from "./actions/getListings";
 import ListingCard from "./components/listing/ListingCard";
 import getCurrentUser from "./actions/getCurrentUser";
 import ClientOnly from "./components/ClientOnly";
+import { list } from "postcss";
 
 export default async function Home() {
-  const listings = await getListings();
+  const listings = await getListings({});
   const currentUser = await getCurrentUser();
   return (
     <ClientOnly>
@@ -21,8 +22,9 @@ export default async function Home() {
           {listings.map((listing: any) => (
             <ListingCard
               currentUser={currentUser}
+              listing={listing}
               key={listing.id}
-              data={listing}
+              price={true}
             />
           ))}
         </div>

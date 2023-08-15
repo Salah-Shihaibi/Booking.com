@@ -5,6 +5,11 @@ import ModelButton from "./ModelButton";
 import { User } from "@prisma/client";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { PiHouseLineBold } from "react-icons/pi";
+import { MdDateRange } from "react-icons/md";
+import { AiOutlineHeart } from "react-icons/ai";
+import { BsHouseAdd } from "react-icons/bs";
+import { RiLogoutBoxLine } from "react-icons/ri";
 
 interface ModelProps {
   toggleMenu: () => void;
@@ -14,9 +19,6 @@ interface ModelProps {
 
 const Model: React.FC<ModelProps> = ({ toggleMenu, isMenu, currentUser }) => {
   const router = useRouter();
-  const signUp = () => {
-    router.push("/signIn/email");
-  };
   return (
     <div
       className={`
@@ -56,26 +58,64 @@ const Model: React.FC<ModelProps> = ({ toggleMenu, isMenu, currentUser }) => {
       </div>
       {!currentUser ? (
         <>
-          <ModelButton onClick={signUp} label="Sign Up" />
-          <ModelButton onClick={signUp} label="List your property" />
+          <ModelButton
+            onClick={() => {
+              router.push("/signIn/email");
+              toggleMenu();
+            }}
+            label="Sign Up"
+          />
+          <ModelButton
+            onClick={() => {
+              router.push("/signIn/email");
+              toggleMenu();
+            }}
+            label="List your property"
+          />
         </>
       ) : (
         <>
-          <ModelButton onClick={() => {}} label="Dashboard" />
+          <ModelButton
+            onClick={() => {
+              router.push("/properties");
+              toggleMenu();
+            }}
+            label="My Properties"
+            icon={PiHouseLineBold}
+          />
           <ModelButton
             onClick={() => {
               router.push("/trips");
+              toggleMenu();
             }}
             label="My trips"
+            icon={MdDateRange}
+          />
+          <ModelButton
+            onClick={() => {
+              router.push("/saved");
+              toggleMenu();
+            }}
+            label="Saved"
+            icon={AiOutlineHeart}
           />
           <ModelButton
             onClick={() => {
               router.push("/listings/create");
+              toggleMenu();
             }}
             label="List your property"
+            icon={BsHouseAdd}
           />
-          <hr />
-          <ModelButton onClick={() => signOut()} label="logout" />
+          <hr className="border" />
+          <ModelButton
+            onClick={() => {
+              signOut();
+              toggleMenu();
+            }}
+            label="logout"
+            icon={RiLogoutBoxLine}
+          />
         </>
       )}
     </div>

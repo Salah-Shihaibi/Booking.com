@@ -1,8 +1,11 @@
+import { IconType } from "react-icons";
+
 interface MenuItemProp {
   onClick: () => void;
   label: string;
+  icon?: IconType;
 }
-const MenuItem: React.FC<MenuItemProp> = ({ onClick, label }) => {
+const MenuItem: React.FC<MenuItemProp> = ({ onClick, label, icon: Icon }) => {
   return (
     <button
       className="hover:bg-neutral-100 
@@ -13,9 +16,13 @@ const MenuItem: React.FC<MenuItemProp> = ({ onClick, label }) => {
    w-full
    text-left
    border-b-[1px]
+   flex
+   flex-row
+   gap-4
    "
       onClick={onClick}
     >
+      {Icon && <Icon size={24} />}
       {label}
     </button>
   );

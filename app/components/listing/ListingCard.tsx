@@ -6,25 +6,37 @@ import { useRouter } from "next/navigation";
 import Button from "../buttons/Button";
 import { AiOutlineRight } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
+import LikeButton from "../buttons/LikeButton";
 
 interface ListingCardProps {
-  currentUser: User | null | undefined;
+  currentUser: User | null;
   listing: Listing;
-  reservation: Reservation;
-  onCancel?: (id: number) => void;
-  disabled: boolean;
-  actionId: number;
-  cancelLabel: string;
+  reservation?: Reservation;
+  onAction?: (id: number) => void;
+  disabled?: boolean;
+  actionId?: number;
+  actionLabel?: string;
+  date?: boolean;
+  price?: boolean;
 }
+
+const getDate = (date: Date) => {
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+};
 
 const ListingCard: React.FC<ListingCardProps> = ({
   currentUser,
   listing,
   reservation,
-  onCancel,
+  onAction,
   disabled,
   actionId,
-  cancelLabel,
+  actionLabel,
+  date = false,
+  price = false,
 }) => {
   const router = useRouter();
   const country = useCountries().getByValue(listing.locationValue);
@@ -42,10 +54,10 @@ const ListingCard: React.FC<ListingCardProps> = ({
        relative
        `}
     >
-      {onCancel && (
+      {actionId && onAction && (
         <MdCancel
           onClick={() => {
-            onCancel(actionId);
+            onAction(actionId);
           }}
           size={27}
           className={`absolute
@@ -87,6 +99,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 ${disabled ? "cursor-not-allowed" : "cursor-pointer"}
                 `}
           />
+          <div className="absolute top-1 right-1">
+            <LikeButton listingId={listing.id} currentUser={currentUser} />
+          </div>
         </div>
         <div className="flex flex-col gap-1">
           <div
@@ -105,10 +120,19 @@ const ListingCard: React.FC<ListingCardProps> = ({
           <div className="text-sm text-neutral-600">
             {country?.label} - {country?.region}
           </div>
-          <div>
-            ${listing.price}{" "}
-            <span className="font-light text-neutral-500">- night</span>
-          </div>
+
+          {price && (
+            <div className="text-sm">
+              ${listing.price}{" "}
+              <span className="font-light text-neutral-500">- night</span>
+            </div>
+          )}
+
+          {reservation && date && (
+            <span className="text-sm font-light text-neutral-500">
+              {getDate(reservation.createdAt)} - {getDate(reservation.endDate)}
+            </span>
+          )}
 
           <div
             className="
@@ -153,9 +177,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
             9.5
           </div>
         </div>
-        {onCancel && (
+        {actionLabel && actionId && onAction && (
           <div className="">
-            <Button onClick={() => onCancel(actionId)} label={cancelLabel} />
+            <Button onClick={() => onAction(actionId)} label={actionLabel} />
           </div>
         )}
       </div>

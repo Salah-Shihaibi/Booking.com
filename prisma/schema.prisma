@@ -15,7 +15,7 @@ model User {
   updatedAt DateTime @updatedAt
   emailVerified DateTime?
   image String?
-  favouriteIds Int[]
+  savedIds Int[]
   accounts Account[]
   listings Listing[]
   reservations Reservation[]
