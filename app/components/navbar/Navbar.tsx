@@ -50,9 +50,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
       <div
         className="flex flex-row 
       justify-between 
-      pt-4
-      px-1
-      pb-4
+      py-2
+      px-2
       items-center
       "
       >

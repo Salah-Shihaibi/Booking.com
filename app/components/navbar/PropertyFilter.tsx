@@ -1,4 +1,5 @@
 "use client";
+import qs from "query-string";
 import { useState, useCallback } from "react";
 import { GiWindmill } from "react-icons/gi";
 import {
@@ -12,6 +13,7 @@ import {
   MdSpa,
 } from "react-icons/md";
 import ServiceButton from "../buttons/PropertyFilterButton";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const propertyTypes = [
   {
@@ -62,13 +64,39 @@ export const propertyTypes = [
 ];
 
 const ServiceRoutes = () => {
-  const [selectedRoute, setSelectedRoute] = useState("Stays");
-  const switchRoute = useCallback((routeName: string) => {
-    setSelectedRoute(routeName);
-  }, []);
+  const router = useRouter();
+  const params = useSearchParams();
+  const route = params?.get("category") || "Stays";
+  const [selectedRoute, setSelectedRoute] = useState(route);
+  const switchRoute = useCallback(
+    (routeName: string) => {
+      setSelectedRoute(routeName);
+      let currentQuery = {};
+      if (params) {
+        currentQuery = qs.parse(params.toString());
+      }
+      const updatedQuery: any = {
+        ...currentQuery,
+        category: routeName,
+      };
+      const url = qs.stringifyUrl(
+        {
+          url: "/",
+          query: updatedQuery,
+        },
+        { skipNull: true }
+      );
+      router.push(url);
+    },
+    [params, selectedRoute]
+  );
 
   return (
-    <div className="px-5 py-5 mr-7 flex flex-row gap-3 items-center overflow-auto">
+    <div
+      className="px-5 pb-4 mr-7 flex
+     flex-row gap-3 items-center
+     xl:justify-center overflow-scroll z-50"
+    >
       {propertyTypes.map((s) => (
         <ServiceButton
           label={s.label}

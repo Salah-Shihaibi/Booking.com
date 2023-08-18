@@ -5,7 +5,7 @@ const Logo = () => {
   return (
     <div
       onClick={() => {
-        router.push("/");
+        window.location.href = "/";
       }}
       className=" pl-2 text-white font-semibold text-xl cursor-pointer"
     >

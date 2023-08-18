@@ -29,11 +29,12 @@ const Button: React.FC<buttonProps> = ({
                 disabled:cursor-not-allowed
               text-white 
               bg-blue-600
-                font-medium text-l 
+                font-medium text-lg 
                 cursor-pointer 
                 px-3 py-2 
                 rounded
                 hover:bg-blue-800
+                transition
                 ${width}
                   `}
     >

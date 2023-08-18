@@ -5,6 +5,7 @@ import Navbar from "./components/navbar/Navbar";
 import ToasterProvider from "./components/providers/ToasterProvider";
 import getCurrentUser from "./actions/getCurrentUser";
 import ClientOnly from "./components/ClientOnly";
+import SearchBar from "./components/search/SearchBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,10 +22,11 @@ export default async function RootLayout({
   const currentUser = await getCurrentUser();
   return (
     <html lang="en">
-      <body className="">
+      <body className="w-full">
         <ClientOnly>
           <ToasterProvider />
           <Navbar currentUser={currentUser} />
+          <SearchBar />
         </ClientOnly>
         <div className="pb-20 pt-5 px-3 md:px-10">{children}</div>
       </body>

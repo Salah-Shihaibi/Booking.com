@@ -118,7 +118,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
             {listing.title}
           </div>
           <div className="text-sm text-neutral-600">
-            {country?.label} - {country?.region}
+            {country?.label} - {country?.region} - {listing.category}
           </div>
 
           {price && (

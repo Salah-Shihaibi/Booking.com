@@ -14,14 +14,21 @@ export type CountrySelectValue = {
 interface CountrySelectProps {
   value?: CountrySelectValue;
   onChange: (value: CountrySelectValue) => void;
+  style?: string;
+  placeholder?: string;
 }
-const CountrySelect: React.FC<CountrySelectProps> = ({ value, onChange }) => {
+const CountrySelect: React.FC<CountrySelectProps> = ({
+  value,
+  onChange,
+  style = "p-3 border-2 my-5",
+  placeholder = "Anywhere",
+}) => {
   const { getAll } = useCountries();
 
   return (
-    <div>
+    <div className="w-full cursor-pointer">
       <Select
-        placeholder="Anywhere"
+        placeholder={placeholder}
         isClearable
         options={getAll()}
         value={value}
@@ -36,7 +43,7 @@ const CountrySelect: React.FC<CountrySelectProps> = ({ value, onChange }) => {
           </div>
         )}
         classNames={{
-          control: () => `p-3 border-2 my-5`,
+          control: () => style,
         }}
       />
     </div>
