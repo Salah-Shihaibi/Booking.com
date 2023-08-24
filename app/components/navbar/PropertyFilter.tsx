@@ -30,7 +30,7 @@ const ServiceRoutes = () => {
       );
       router.push(url);
     },
-    [params, selectedRoute]
+    [params, selectedRoute, router]
   );
 
   return (

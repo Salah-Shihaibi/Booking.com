@@ -25,23 +25,8 @@ const Reviews: React.FC<ReviewsParams> = ({
 }) => {
   const router = useRouter();
   const [deleteId, setDeleteId] = useState<null | number>(null);
-
-  if (!reviews || reviews.length === 0) {
-    return (
-      <div>
-        <Button
-          icon={IoMdAddCircleOutline}
-          label="Add a review"
-          width="w-[165px]"
-          onClick={() => {
-            router.push(`/reviews/create/${listingId}`);
-          }}
-        />
-        <div className="pt-4 font-semibold text-xl">No reviews</div>
-      </div>
-    );
-  }
   const reviewScore = useMemo(() => {
+    if (!reviews) return null;
     return (
       reviews.reduce((sum, item) => sum + item.reviewScore, 0) / reviews.length
     ).toFixed(1);
@@ -66,6 +51,21 @@ const Reviews: React.FC<ReviewsParams> = ({
     [router]
   );
 
+  if (!reviews || reviews.length === 0) {
+    return (
+      <div>
+        <Button
+          icon={IoMdAddCircleOutline}
+          label="Add a review"
+          width="w-[165px]"
+          onClick={() => {
+            router.push(`/reviews/create/${listingId}`);
+          }}
+        />
+        <div className="pt-4 font-semibold text-xl">No reviews</div>
+      </div>
+    );
+  }
   return (
     <div className="review">
       <div className="font-bold text-xl py-4">Guest Reviews</div>

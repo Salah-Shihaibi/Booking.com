@@ -45,9 +45,6 @@ const getDate = (date: Date) => {
 
 const SearchBar = () => {
   const pathname = usePathname();
-  if (pathname !== "/") {
-    return <></>;
-  }
   const router = useRouter();
   const { getAll, getByValue } = useCountries();
   const params = useSearchParams();
@@ -137,6 +134,10 @@ const SearchBar = () => {
     bathRoomCount,
     params,
   ]);
+
+  if (pathname !== "/") {
+    return <></>;
+  }
 
   let body = <></>;
   if (options === OPTIONS.LOCATION) {

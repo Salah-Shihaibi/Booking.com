@@ -31,19 +31,13 @@ const CreateReview: React.FC<CreateReviewParam> = ({ listingId }) => {
     },
   });
 
-  const updatePos = useCallback(
-    (newPos: number) => {
-      setPos(newPos);
-    },
-    [pos]
-  );
+  const updatePos = useCallback((newPos: number) => {
+    setPos(newPos);
+  }, []);
 
-  const updateHoverPos = useCallback(
-    (newHoverPos: number) => {
-      setHoverPos(newHoverPos);
-    },
-    [pos]
-  );
+  const updateHoverPos = useCallback((newHoverPos: number) => {
+    setHoverPos(newHoverPos);
+  }, []);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);

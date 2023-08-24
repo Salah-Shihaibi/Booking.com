@@ -19,7 +19,7 @@ const useClickOutsideComponent = ({
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [updateVar]);
+  }, [updateVar, handleClickOutside]);
 
   return { divRef };
 };

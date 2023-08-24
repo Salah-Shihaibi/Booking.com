@@ -43,7 +43,7 @@ const ReserveListing: React.FC<ListingPageClientProps> = ({
         setTotalPrice(listing.price);
       }
     }
-  }, [dateRange, listing.price]);
+  }, [dateRange, listing.price, initialDateRange]);
 
   const disabledDates = useMemo(() => {
     let dates: Date[] = [];
