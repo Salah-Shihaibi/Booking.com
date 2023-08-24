@@ -30,7 +30,7 @@ const ServiceRoutes = () => {
       );
       router.push(url);
     },
-    [params, selectedRoute, router]
+    [params, router]
   );
 
   return (
@@ -41,6 +41,7 @@ const ServiceRoutes = () => {
     >
       {propertyTypes.map((s) => (
         <ServiceButton
+          key={s.label}
           label={s.label}
           selectedRoute={selectedRoute}
           switchRoute={switchRoute}

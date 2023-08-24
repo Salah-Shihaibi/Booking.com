@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 interface IUseClickOutsideComponent {
   updateVar: any;
@@ -9,17 +9,20 @@ const useClickOutsideComponent = ({
   action,
 }: IUseClickOutsideComponent) => {
   const divRef = useRef<HTMLDivElement | null>(null);
-  function handleClickOutside(event: MouseEvent) {
-    if (divRef.current && !divRef.current.contains(event.target as Node)) {
-      action();
-    }
-  }
+  const handleClickOutside = useCallback(
+    (event: MouseEvent) => {
+      if (divRef.current && !divRef.current.contains(event.target as Node)) {
+        action();
+      }
+    },
+    [divRef]
+  );
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [updateVar, handleClickOutside]);
+  }, [updateVar]);
 
   return { divRef };
 };

@@ -94,7 +94,7 @@ const Reviews: React.FC<ReviewsParams> = ({
       />
       <div className="my-4 py-4 px-2 flex flex-col gap-8 rounded-md bg-neutral-100">
         {reviews?.map((review) => (
-          <div className="relative flex flex-row gap-5">
+          <div key={review.id} className="relative flex flex-row gap-5">
             {review.userId === userId && (
               <MdCancel
                 onClick={() => {

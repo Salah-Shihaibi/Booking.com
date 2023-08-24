@@ -86,6 +86,7 @@ const SearchBar = () => {
   const removeSearch = useCallback(() => {
     if (options !== OPTIONS.QUIT) setOptions(OPTIONS.QUIT);
   }, [options]);
+
   const { divRef } = useClickOutsideComponent({
     updateVar: options,
     action: removeSearch,
@@ -125,7 +126,6 @@ const SearchBar = () => {
     setOptions(OPTIONS.QUIT);
     router.push(url);
   }, [
-    options,
     location,
     router,
     guestCount,
@@ -192,6 +192,7 @@ const SearchBar = () => {
             })
             .map((option) => (
               <div
+                key={option.label}
                 onClick={() => {
                   setLocation(option);
                   intializeDate();
