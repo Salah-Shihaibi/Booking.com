@@ -29,7 +29,7 @@ const Input: React.FC<InputProps> = ({
   lGap = false,
 }) => {
   return (
-    <>
+    <div>
       <label className={` ${errors[id] ? "text-red-500" : ""}`}>{label}</label>
       {type !== "textarea" ? (
         <div className="relative">
@@ -84,7 +84,7 @@ const Input: React.FC<InputProps> = ({
 `}
         />
       )}
-    </>
+    </div>
   );
 };
 

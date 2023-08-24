@@ -53,13 +53,15 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
               onChange([]);
             }}
             className="
-                p-1
+                p-1                
                 border-0
-                hover:opacity-70
-                tarnstion
+                bg-blue-600
+                hover:bg-blue-900
+                transtion
+                mb-1
                 "
           >
-            <IoMdClose size={18} />
+            <IoMdClose size={25} color="white" />
           </button>
           <ImageSlide base64Strings={value} />
         </>

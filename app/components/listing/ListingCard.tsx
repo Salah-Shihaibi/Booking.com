@@ -1,16 +1,19 @@
 "use client";
 import useCountries from "@/app/hooks/useCountries";
-import { Listing, Reservation, User } from "@prisma/client";
+import { Listing, Reservation, Review, User } from "@prisma/client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Button from "../buttons/Button";
 import { AiOutlineRight } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
 import LikeButton from "../buttons/LikeButton";
+import { useMemo } from "react";
+import { propertyTypes } from "@/app/data/propertyTypes";
+import { mapScoreToDescription } from "@/app/utils/reviews";
 
 interface ListingCardProps {
   currentUser: User | null;
-  listing: Listing;
+  listing: Listing & { reviews: Review[] };
   reservation?: Reservation;
   onAction?: (id: number) => void;
   disabled?: boolean;
@@ -40,6 +43,18 @@ const ListingCard: React.FC<ListingCardProps> = ({
 }) => {
   const router = useRouter();
   const country = useCountries().getByValue(listing.locationValue);
+  const reviewScore = useMemo(() => {
+    if (!listing.reviews || listing.reviews.length === 0) {
+      return null;
+    }
+    return (
+      listing.reviews.reduce((sum, item) => sum + item.reviewScore, 0) /
+      listing.reviews.length
+    ).toFixed(1);
+  }, [listing.reviews]);
+
+  const propertyType = propertyTypes.find((p) => listing.category === p.label);
+  const Icon = propertyType?.icon;
   return (
     <div
       className={`flex flex-row
@@ -80,8 +95,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
     rounded-xl
     sm:h-[200px]
     sm:w-[200px]
-    w-[110px]
-    h-[110px]
+    w-[130px]
+    h-[130px]
    "
         >
           <Image
@@ -118,9 +133,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
             {listing.title}
           </div>
           <div className="text-sm text-neutral-600">
-            {country?.label} - {country?.region} - {listing.category}
+            {country?.label} - {country?.region}
           </div>
-
+          <div className="flex flex-row gap-1 items-center">
+            {Icon && <Icon size={15} className="text-neutral-600" />}
+            <div className="text-sm text-neutral-600">{listing.category}</div>
+          </div>
           {price && (
             <div className="text-sm">
               ${listing.price}{" "}
@@ -134,25 +152,28 @@ const ListingCard: React.FC<ListingCardProps> = ({
             </span>
           )}
 
-          <div
-            className="
+          {reviewScore && (
+            <div
+              className="
              flex md:hidden lg:flex xl:hidden
              flex-row gap-2
              items-center
              text-xs font-light
             text-neutral-600"
-          >
-            <span
-              className="p-1
+            >
+              <span
+                className="p-1
             bg-blue-900
             text-white
              font-semibold
               rounded-md"
-            >
-              9.5
-            </span>
-            {"Review score"} . {"10"} reviews
-          </div>
+              >
+                {reviewScore}
+              </span>
+              {mapScoreToDescription(Math.round(Number(reviewScore)))} .{" "}
+              {listing.reviews.length} reviews
+            </div>
+          )}
 
           <div className="hidden sm:block text-md text-neutral-600">
             {listing.description}
@@ -160,22 +181,36 @@ const ListingCard: React.FC<ListingCardProps> = ({
         </div>
       </div>
       <div className="hidden md:flex lg:hidden xl:flex flex-col justify-between">
-        <div className="flex flex-row gap-5 justify-end">
-          <div>
-            <div>{"Review score \n"}</div>
-            <div className="text-sm font-light text-neutral-500">
-              {"10"} reviews
-            </div>
-          </div>
-          <div
-            className="p-2 flex
+        <div className="flex flex-row gap-5 justify-end min-w-[160px]">
+          {reviewScore ? (
+            <>
+              <div>
+                <div>{"Review score \n"}</div>
+                <div className="text-sm font-light text-neutral-500">
+                  {listing.reviews.length} reviews
+                </div>
+              </div>
+              <div
+                className="p-2 flex
              items-center
               bg-blue-900
                text-white
                 rounded-md"
-          >
-            9.5
-          </div>
+              >
+                {reviewScore}
+              </div>
+            </>
+          ) : (
+            <div
+              className="p-2 flex
+            items-center
+             bg-blue-900
+              text-white
+               rounded-md"
+            >
+              New
+            </div>
+          )}
         </div>
         {actionLabel && actionId && onAction && (
           <div className="">

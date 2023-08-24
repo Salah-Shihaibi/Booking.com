@@ -7,7 +7,7 @@ import Button from "../buttons/Button";
 import { SlCalender } from "react-icons/sl";
 import { GoPerson } from "react-icons/go";
 import { CiLocationOn } from "react-icons/ci";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Range } from "react-date-range";
 import { useCallback, useState } from "react";
 import useClickOutsideComponent from "@/app/hooks/useClickOutsideComponent";
@@ -44,6 +44,10 @@ const getDate = (date: Date) => {
 };
 
 const SearchBar = () => {
+  const pathname = usePathname();
+  if (pathname !== "/") {
+    return <></>;
+  }
   const router = useRouter();
   const { getAll, getByValue } = useCountries();
   const params = useSearchParams();

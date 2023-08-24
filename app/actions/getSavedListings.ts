@@ -15,6 +15,12 @@ export default async function getSavedListings() {
           in: [...(currentUser.savedIds || [])],
         },
       },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        reviews: true,
+      },
     });
 
     return savedListings;

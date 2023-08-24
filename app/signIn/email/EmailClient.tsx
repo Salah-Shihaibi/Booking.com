@@ -53,7 +53,7 @@ const EmailClient = () => {
         required
         placeHolder="Enter your email address"
       />
-      <br />
+      <div className="mb-5" />
       <Button
         onClick={handleSubmit(onSubmit)}
         label="Continue with Email"

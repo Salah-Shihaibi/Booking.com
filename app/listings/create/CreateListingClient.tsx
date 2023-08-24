@@ -1,7 +1,6 @@
 "use client";
 import Heading from "@/app/components/Heading";
 import PropertyButton from "@/app/components/buttons/PropertyButton";
-import { propertyTypes } from "@/app/components/navbar/PropertyFilter";
 import { useState, useMemo } from "react";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import Map from "@/app/components/Map";
@@ -14,6 +13,7 @@ import { AiOutlineLeft } from "react-icons/ai";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { propertyTypes } from "@/app/data/propertyTypes";
 
 enum STEPS {
   CATEGORY = 0,
@@ -201,7 +201,7 @@ const CreateListingClient = () => {
 
   if (step === STEPS.IMAGES) {
     body = (
-      <div className="flex flex-col gap-5 h-[65vh]">
+      <div className="flex flex-col gap-5 h-[67vh]">
         <Heading
           title="Add photos of your place"
           subtitle="Show guests what your place looks like!"

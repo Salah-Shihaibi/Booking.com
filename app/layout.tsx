@@ -28,7 +28,7 @@ export default async function RootLayout({
           <Navbar currentUser={currentUser} />
           <SearchBar />
         </ClientOnly>
-        <div className="pb-20 pt-5 px-3 md:px-10">{children}</div>
+        <div className="pb-2 pt-5 px-3 md:px-10">{children}</div>
       </body>
     </html>
   );

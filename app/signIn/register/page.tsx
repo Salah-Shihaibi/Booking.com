@@ -69,6 +69,7 @@ const RegisterClient = () => {
             type="password"
             required
           />
+          <div className="mb-5" />
           <Button
             onClick={handleSubmit(onSubmit)}
             label="Create account"

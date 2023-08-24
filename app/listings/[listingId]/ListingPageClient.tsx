@@ -3,14 +3,16 @@
 import Heading from "@/app/components/Heading";
 import useCountries from "@/app/hooks/useCountries";
 import Map from "@/app/components/Map";
-import { Listing, Reservation, User } from "@prisma/client";
+import { Listing, Reservation, Review, User } from "@prisma/client";
 import Image from "next/image";
 import Avatar from "@/app/components/Avatar";
-import { propertyTypes } from "@/app/components/navbar/PropertyFilter";
 import ListingReservation from "@/app/components/listing/ListingReservation";
+import Reviews from "@/app/components/reviews/Reviews";
+import { propertyTypes } from "@/app/data/propertyTypes";
+import ImageSlide from "@/app/components/ImageSlide";
 
 interface ListingPageClientProps {
-  listing: Listing & { user: User };
+  listing: Listing & { user: User; reviews?: Review[] };
   currentUser: User | null;
   reservations?: Reservation[] | null;
 }
@@ -27,9 +29,9 @@ const ListingPageClient: React.FC<ListingPageClientProps> = ({
   return (
     <div
       className="
-    max-w-screen-lg 
-    mx-auto
-  "
+      max-w-screen-lg
+      mx-auto
+    "
     >
       <div className="flex flex-col gap-6">
         <Heading
@@ -38,19 +40,14 @@ const ListingPageClient: React.FC<ListingPageClientProps> = ({
         />
         <div
           className="
-          w-full
-          h-[60vh]
-          overflow-hidden 
-          rounded-xl
-          relative
-        "
+            w-full
+            h-[60vh]
+            overflow-hidden
+            rounded-xl
+            relative
+          "
         >
-          <Image
-            src={listing.imagesSrc[0]}
-            fill
-            className="object-cover w-full"
-            alt="Image"
-          />
+          <ImageSlide base64Strings={listing.imagesSrc} />
         </div>
 
         <div className="grid grid-cols-8 gap-4">
@@ -58,26 +55,26 @@ const ListingPageClient: React.FC<ListingPageClientProps> = ({
             <div className="flex flex-col gap-2">
               <div
                 className="
-            text-xl 
-            font-semibold 
-            flex 
-            flex-row 
-            items-center
-            gap-2
-          "
+              text-xl
+              font-semibold
+              flex
+              flex-row
+              items-center
+              gap-2
+            "
               >
                 <div>Hosted by {listing?.user?.email}</div>
                 <Avatar src={listing?.user?.image} />
               </div>
               <div
                 className="
-            flex 
-            flex-row 
-            items-center 
-            gap-4 
-            font-light
-            text-neutral-500
-          "
+              flex
+              flex-row
+              items-center
+              gap-4
+              font-light
+              text-neutral-500
+            "
               >
                 <div>{listing.guestCount} guests</div>
                 <div>{listing.roomCount} rooms</div>
@@ -86,7 +83,7 @@ const ListingPageClient: React.FC<ListingPageClientProps> = ({
             </div>
             <hr />
             <div className="flex flex-row gap-8 items-center">
-              <Icon size={60} className="text-neutral-600" />
+              {Icon && <Icon size={60} className="text-neutral-600" />}
               <div className="flex flex-col">
                 <div className="text-lg font-semibold">
                   {propertyType?.label}
@@ -99,7 +96,7 @@ const ListingPageClient: React.FC<ListingPageClientProps> = ({
             <hr />
             <div
               className="
-      text-lg font-light text-neutral-500"
+        text-lg font-light text-neutral-500"
             >
               {listing.description}
             </div>
@@ -115,6 +112,13 @@ const ListingPageClient: React.FC<ListingPageClientProps> = ({
             />
           </div>
         </div>
+
+        <Reviews
+          currentUser={currentUser}
+          listingId={listing.id}
+          reviews={listing.reviews}
+          userId={currentUser?.id}
+        />
       </div>
     </div>
   );

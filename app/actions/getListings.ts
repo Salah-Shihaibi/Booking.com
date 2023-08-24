@@ -79,6 +79,9 @@ export default async function getListings(params: IListingsParams) {
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        reviews: true,
+      },
     });
 
     return listings;

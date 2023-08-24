@@ -1,10 +1,12 @@
 import React, { useCallback } from "react";
+import { IconType } from "react-icons";
 
 interface buttonProps {
   onClick: () => void;
   disabled?: boolean;
   label: string;
   width?: string;
+  icon?: IconType;
 }
 
 const Button: React.FC<buttonProps> = ({
@@ -12,6 +14,7 @@ const Button: React.FC<buttonProps> = ({
   disabled = false,
   label,
   width = "w-full",
+  icon: Icon,
 }) => {
   const handleSubmit = useCallback(() => {
     if (disabled) {
@@ -36,8 +39,10 @@ const Button: React.FC<buttonProps> = ({
                 hover:bg-blue-800
                 transition
                 ${width}
+                ${Icon && "flex flex-row items-center gap-2"}
                   `}
     >
+      {Icon && <Icon size={25} />}
       {label}
     </button>
   );

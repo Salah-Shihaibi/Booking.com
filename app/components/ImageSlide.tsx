@@ -21,25 +21,24 @@ const ImageSlide: React.FC<ImageSlideProps> = ({ base64Strings }) => {
   };
 
   return (
-    <div className="w-full h-full mx-auto">
+    <div className="w-full h-full mx-auto rounded-xl">
       <div className="relative flex justify-center h-[52vh]">
         <Image
-          width="0"
-          height="0"
-          className="w-auto max-w-[85%] h-auto"
+          fill
+          className="object-cover w-full"
           alt={`Image ${currentIndex + 1}`}
           src={base64Strings[currentIndex]}
         />
         <div className="absolute top-1/2 left-0 right-0 flex justify-between">
           <button
             onClick={handlePrev}
-            className="text-white bg-blue-700 p-2 rounded-full"
+            className="text-white bg-blue-700 p-2 rounded-full ml-1"
           >
             <FiChevronLeft size={20} />
           </button>
           <button
             onClick={handleNext}
-            className="text-white bg-blue-700 p-2 rounded-full"
+            className="text-white bg-blue-700 p-2 rounded-full mr-1"
           >
             <FiChevronRight size={20} />
           </button>

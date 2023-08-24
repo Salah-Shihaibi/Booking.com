@@ -1,67 +1,9 @@
 "use client";
 import qs from "query-string";
 import { useState, useCallback } from "react";
-import { GiWindmill } from "react-icons/gi";
-import {
-  MdBeachAccess,
-  MdBusiness,
-  MdLandscape,
-  MdApartment,
-  MdHome,
-  MdHotel,
-  MdLocalCafe,
-  MdSpa,
-} from "react-icons/md";
 import ServiceButton from "../buttons/PropertyFilterButton";
 import { useRouter, useSearchParams } from "next/navigation";
-
-export const propertyTypes = [
-  {
-    label: "Beach",
-    icon: MdBeachAccess,
-    description: "This property is close to the beach!",
-  },
-  {
-    label: "Windmills",
-    icon: GiWindmill,
-    description: "This property has windmills!",
-  },
-  {
-    label: "Business",
-    icon: MdBusiness,
-    description: "Perfect for business activities and meetings.",
-  },
-  {
-    label: "Scenic Views",
-    icon: MdLandscape,
-    description: "Enjoy breathtaking scenic views from this property.",
-  },
-  {
-    label: "Apartment",
-    icon: MdApartment,
-    description: "Modern apartment with all the amenities you need.",
-  },
-  {
-    label: "Cozy Home",
-    icon: MdHome,
-    description: "A cozy home that provides comfort and relaxation.",
-  },
-  {
-    label: "Luxury Hotel",
-    icon: MdHotel,
-    description: "Experience luxury and elegance at this hotel property.",
-  },
-  {
-    label: "Café Nearby",
-    icon: MdLocalCafe,
-    description: "Surrounded by charming cafés and eateries.",
-  },
-  {
-    label: "Spa Retreat",
-    icon: MdSpa,
-    description: "Indulge in relaxation and rejuvenation at this spa property.",
-  },
-];
+import { propertyTypes } from "@/app/data/propertyTypes";
 
 const ServiceRoutes = () => {
   const router = useRouter();
