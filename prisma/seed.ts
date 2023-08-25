@@ -27,6 +27,23 @@ async function seedDatabase() {
       hashedPassword,
     },
   ];
+
+  for (const userDate of users) {
+    await prisma.user.create({
+      data: userDate,
+    });
+  }
+
+  const userIds = (
+    await prisma.user.findMany({
+      select: {
+        id: true,
+      },
+    })
+  ).map((user) => {
+    return user.id;
+  });
+
   const reviews = {
     create: [
       {
@@ -34,24 +51,25 @@ async function seedDatabase() {
         title: "Breathtaking Views",
         description:
           "Our stay was absolutely fantastic. The views from the property were breathtaking and made our experience unforgettable!",
-        userId: 1,
+        userId: userIds[0],
       },
       {
         reviewScore: 4,
         title: "Cozy Retreat",
         description:
           "The cozy ambiance of this place made our vacation truly relaxing. We thoroughly enjoyed our stay and would recommend it!",
-        userId: 2,
+        userId: userIds[3],
       },
       {
         reviewScore: 2,
         title: "Disappointing",
         description:
           "We were disappointed with our stay. The property didn't meet our expectations, and the service was lacking.",
-        userId: 3,
+        userId: userIds[2],
       },
     ],
   };
+
   const listings = [
     {
       title: "Mountain View Retreat",
@@ -63,7 +81,7 @@ async function seedDatabase() {
       guestCount: 6,
       locationValue: "GB",
       price: 150,
-      userId: 2,
+      userId: userIds[0],
       reviews: reviews,
     },
     {
@@ -77,7 +95,7 @@ async function seedDatabase() {
       guestCount: 2,
       locationValue: "DE",
       price: 80,
-      userId: 3,
+      userId: userIds[2],
     },
     {
       title: "Rustic Farmhouse Getaway",
@@ -90,7 +108,7 @@ async function seedDatabase() {
       guestCount: 8,
       locationValue: "ID",
       price: 200,
-      userId: 1,
+      userId: userIds[0],
       reviews: reviews,
     },
     {
@@ -103,7 +121,7 @@ async function seedDatabase() {
       guestCount: 4,
       locationValue: "GR",
       price: 120,
-      userId: 2,
+      userId: userIds[1],
     },
     {
       title: "Historic Townhouse",
@@ -116,7 +134,7 @@ async function seedDatabase() {
       guestCount: 6,
       locationValue: "CH",
       price: 130,
-      userId: 1,
+      userId: userIds[0],
     },
     {
       title: "Scenic Mountain Retreat",
@@ -129,7 +147,7 @@ async function seedDatabase() {
       guestCount: 4,
       locationValue: "FR",
       price: 120,
-      userId: 3,
+      userId: userIds[2],
     },
     {
       title: "Downtown Apartment Oasis",
@@ -141,7 +159,7 @@ async function seedDatabase() {
       guestCount: 2,
       locationValue: "AS",
       price: 90,
-      userId: 1,
+      userId: userIds[0],
       reviews: reviews,
     },
     {
@@ -154,7 +172,7 @@ async function seedDatabase() {
       guestCount: 3,
       locationValue: "FR",
       price: 130,
-      userId: 2,
+      userId: userIds[1],
       reviews: reviews,
     },
     {
@@ -167,7 +185,7 @@ async function seedDatabase() {
       guestCount: 8,
       locationValue: "GR",
       price: 250,
-      userId: 1,
+      userId: userIds[0],
       reviews: reviews,
     },
     {
@@ -180,16 +198,10 @@ async function seedDatabase() {
       guestCount: 6,
       locationValue: "FR",
       price: 140,
-      userId: 3,
+      userId: userIds[2],
       reviews: reviews,
     },
   ];
-
-  for (const userDate of users) {
-    await prisma.user.create({
-      data: userDate,
-    });
-  }
 
   for (const listingData of listings) {
     await prisma.listing.create({
