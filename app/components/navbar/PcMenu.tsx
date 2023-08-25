@@ -40,7 +40,7 @@ const PcMenu: React.FC<PcMenuProps> = ({ currentUser }) => {
         ) : (
           <>
             <button
-              onClick={() => router.push("signIn/email")}
+              onClick={() => router.push("/signIn/email")}
               className="text-blue-500 
       bg-white
       font-medium text-l 
