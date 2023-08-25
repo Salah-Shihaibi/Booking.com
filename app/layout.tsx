@@ -4,8 +4,8 @@ import { Inter } from "next/font/google";
 import Navbar from "./components/navbar/Navbar";
 import ToasterProvider from "./components/providers/ToasterProvider";
 import getCurrentUser from "./actions/getCurrentUser";
-import ClientOnly from "./components/ClientOnly";
 import SearchBar from "./components/search/SearchBar";
+import ClientOnly from "./components/ClientOnly";
 
 const inter = Inter({ subsets: ["latin"] });
 
