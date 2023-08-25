@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 interface ReviewsParams {
   currentUser: User | null;
   listingId: Number;
-  reviews: (Review & { user: User })[] | null;
+  reviews: (Review & { user: User })[];
   userId?: number;
 }
 

@@ -5,7 +5,7 @@ import useSavedListing from "@/app/hooks/useSavedListing";
 
 interface HeartButtonProps {
   listingId: number;
-  currentUser: User | null;
+  currentUser: User | null | undefined;
 }
 
 const HeartButton: React.FC<HeartButtonProps> = ({

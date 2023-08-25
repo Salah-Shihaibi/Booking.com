@@ -12,7 +12,7 @@ import { propertyTypes } from "@/app/data/propertyTypes";
 import ImageSlide from "@/app/components/ImageSlide";
 
 interface ListingPageClientProps {
-  listing: Listing & { user: User; reviews?: Review[] };
+  listing: Listing & { user: User; reviews: (Review & { user: User })[] };
   currentUser: User | null;
   reservations?: Reservation[] | null;
 }

@@ -1,3 +1,4 @@
+"use client"
 import { BsStarFill, BsStar } from "react-icons/bs";
 
 interface startProps {

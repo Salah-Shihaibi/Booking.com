@@ -12,7 +12,7 @@ import { propertyTypes } from "@/app/data/propertyTypes";
 import { mapScoreToDescription } from "@/app/utils/reviews";
 
 interface ListingCardProps {
-  currentUser: User | null;
+  currentUser: User | null | undefined;
   listing: Listing & { reviews: Review[] };
   reservation?: Reservation;
   onAction?: (id: number) => void;

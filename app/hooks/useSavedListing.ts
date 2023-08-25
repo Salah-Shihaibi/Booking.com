@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 
 interface IUseSavedListing {
   listingId: number;
-  currentUser: User | null;
+  currentUser: User | null | undefined;
 }
 
 const useSavedListing = ({ listingId, currentUser }: IUseSavedListing) => {
