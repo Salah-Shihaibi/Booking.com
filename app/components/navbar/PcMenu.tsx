@@ -21,7 +21,7 @@ const PcMenu: React.FC<PcMenuProps> = ({ currentUser }) => {
         <button
           onClick={() => {
             if (!currentUser) router.push(`/signIn/email`);
-            router.push("/listings/create");
+            else router.push("/listings/create");
           }}
           className="text-white 
       font-medium text-l 
