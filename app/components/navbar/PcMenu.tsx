@@ -20,6 +20,7 @@ const PcMenu: React.FC<PcMenuProps> = ({ currentUser }) => {
       <div className="flex flex-row item-center justify-between items-center gap-3">
         <button
           onClick={() => {
+            if (!currentUser) router.push(`/signIn/email`);
             router.push("/listings/create");
           }}
           className="text-white 
